@@ -12,10 +12,10 @@ public class View {
     public View(int nRows, int nCols) {
         this.nRows = nRows;
         this.nCols = nCols;
-        this.columnHeaders = generateColumnHeaders();
+        this.columnHeaders = renderColumnHeaders();
     }
 
-    private String generateColumnHeaders() {
+    private String renderColumnHeaders() {
         StringBuilder columnHeaders = new StringBuilder("\n ");
         for (int col = 0; col < this.nCols; col++)
             columnHeaders.append(String.format("%" + cellPadding + "d", col + 1));
