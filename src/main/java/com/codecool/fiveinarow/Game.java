@@ -47,8 +47,10 @@ public class Game implements GameInterface {
     }
 
     public void printBoard() {
-        for (int[] row : board) {
-            for (int cellValue : row) {
+        for (int row = 0; row < this.board.length; row++) {
+
+            for (int col = 0; col < this.board[row].length; col++) {
+                int cellValue = this.board[row][col];
                 System.out.print(String.format("%c ", this.cellSymbols[cellValue]));
             }
             System.out.println();
