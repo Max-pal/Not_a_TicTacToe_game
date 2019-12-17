@@ -22,7 +22,7 @@ public class View {
     }
 
     private String generateColumnHeaders() {
-        StringBuilder columnHeaders = new StringBuilder(" ");
+        StringBuilder columnHeaders = new StringBuilder("\n ");
         for (int col = 0; col < this.nCols; col++)
             columnHeaders.append(String.format("%" + cellPadding + "d", col + 1));
         return columnHeaders.toString();
@@ -40,6 +40,6 @@ public class View {
             }
 
         }
-        return printable.toString();
+        return printable.append("\n").toString();
     }
 }
