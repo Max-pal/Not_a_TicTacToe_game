@@ -5,7 +5,7 @@ public class Game implements GameInterface {
     private int[][] board;
 
     public Game(int nRows, int nCols) {
-	this.board = new int[nRows][nCols]
+		this.board = new int[nRows][nCols];
     }
 
     public int[][] getBoard() {
