@@ -48,5 +48,6 @@ public class Game implements GameInterface {
     }
 
     public void play(int howMany) {
+        printBoard();
     }
 }
