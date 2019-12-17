@@ -28,6 +28,9 @@ public class Game implements GameInterface {
     }
 
     public void mark(int player, int row, int col) {
+        if (this.board[row][col] == 0) {
+            this.board[row][col] = player;
+        }
     }
 
     public boolean hasWon(int player, int howMany) {
