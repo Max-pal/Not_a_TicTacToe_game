@@ -4,9 +4,19 @@ import java.util.Arrays;
 public class Game implements GameInterface {
 
     private int[][] board;
+    private final char[] cellSymbols = {'.', 'X', 'O'};
+    private char[] columnLetters;
 
     public Game(int nRows, int nCols) {
 		this.board = new int[nRows][nCols];
+		initColumnLetters(nCols);
+    }
+
+    private void initColumnLetters(int nCols) {
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+        this.columnLetters = new char[nCols];
+        for (int col = 0; col < nCols; col++)
+            this.columnLetters[col] = alphabet[col];
     }
 
     public int[][] getBoard() {
@@ -37,8 +47,12 @@ public class Game implements GameInterface {
     }
 
     public void printBoard() {
-        for (int[] row : board)
-            System.out.println(Arrays.toString(row));
+        for (int[] row : board) {
+            for (int cellValue : row) {
+                System.out.print(String.format("%c ", this.cellSymbols[cellValue]));
+            }
+            System.out.println();
+        }
     }
 
     public void printResult(int player) {
