@@ -1,7 +1,7 @@
 package com.codecool.fiveinarow;
 import java.util.Arrays;
 
-public class Game /* implements GameInterface */ {
+public class Game implements GameInterface {
 
     private int[][] board;
 
@@ -36,20 +36,9 @@ public class Game /* implements GameInterface */ {
         return false;
     }
 
-	public static int[][] getTestBoard(int row, int col) {
-		int[][] board = new int[row][col];
-		for (int r = 0; r < row; r++) {
-			for (int c = 0; c < col; c++) {
-				board[r][c] = 0;
-			}
-		}
-		return board;
-	}
-
-    public static void printBoard() {
-    	int[][] board = getTestBoard(7, 11);
-    	for (int[] row : board)
-    		System.out.println(Arrays.toString(row));
+    public void printBoard() {
+        for (int[] row : board)
+            System.out.println(Arrays.toString(row));
     }
 
     public void printResult(int player) {
