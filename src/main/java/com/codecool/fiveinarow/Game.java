@@ -23,7 +23,6 @@ public class Game implements GameInterface {
     }
 
     public int[] getMove(int player) {
-<<<<<<< HEAD
     	char FIRST_ROW_CHAR = 'A';
     	int FIRST_COL_NUMBER = 1;
 
@@ -44,6 +43,14 @@ public class Game implements GameInterface {
 	        try {
 	        	System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
 	    	    System.out.println("Next player: " + player);
+
+	    	    if (scan.findInLine("quit").equals("quit")) {
+	    	        coordinates[0] = -1;
+	    	        coordinates[1] = -1;
+	    	        System.exit(0);
+	    	        return coordinates;
+	    	    }
+
 	    	    userInput = scan.next();
 		        int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
 
