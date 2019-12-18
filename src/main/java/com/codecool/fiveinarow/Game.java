@@ -27,7 +27,26 @@ public class Game implements GameInterface {
     }
 
     public boolean hasWon(int player, int howMany) {
-        return false;
+        String currentPlayerMark;
+        currentPlayerMark = (player == 1) ? "X" : "O";
+        int counterDiagonal = 1;
+        int counterVertical = 1;
+        int counterHorizontal = 1;
+        for(int i = 0; i < board.lenght; i++) {
+            for(int j = 0; j < board.lenght; j++)
+                if(board[j][i].equals(currentPlayerMark){
+                    counterVertical++;
+
+                if (counterVertical == howMany) {
+                    return true;
+                }
+
+                if(board[i][j].equals(currentPlayerMark))
+                    counterHorizontal++
+
+                if (counterHorizontal == howMany) {
+                    return true;
+                }
     }
 
     public boolean isFull() {
