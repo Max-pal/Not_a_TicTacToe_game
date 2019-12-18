@@ -90,7 +90,39 @@ public class Game implements GameInterface {
     }
 
     public boolean hasWon(int player, int howMany) {
-        return false;
+        int counterForwardDiagonal = 1;
+        int counterBackwardDiagonal = 1;
+        int counterVertical = 1;
+        int counterHorizontal = 1;
+        for(int i = 0; i < board.length; i++) {
+            if (board[i][i] == player) {
+                counterBackwardDiagonal++;
+
+                if (counterBackwardDiagonal == howMany) {
+                    return true;
+                }
+            if (board[i][(board.length - 1)] == player) {
+                counterForwardDiagonal++;
+                }
+                if (counterForwardDiagonal == howMany){
+                    return true;
+                }
+            for(int j = 0; j < board[0].length; j++) {
+                if(board[j][i] == player){
+                counterVertical++;
+            }
+                if (counterVertical == howMany) {
+                    return true;
+                }
+
+                if(board[i][j] == player)
+                    counterHorizontal++;
+
+                if (counterHorizontal == howMany) {
+                    return true;
+                }
+            }
+        }
     }
 
     public boolean isFull() {
@@ -102,7 +134,7 @@ public class Game implements GameInterface {
 
     public void printBoard() {
         String printableBoard = view.renderBoard(this.board);
-        System.out.println(printableBoard);
+        System.out.println(View.clearSequence + printableBoard);
     }
 
     public void printResult(int player) {
@@ -112,5 +144,19 @@ public class Game implements GameInterface {
     }
 
     public void play(int howMany) {
+        int player = 1;
+        int[] move = new int[2];
+        while (true) {
+            printBoard();
+            move = getMove(player);
+            mark(player, move[0], move[1]);
+            if (hasWon(player, howMany)) {
+                printResult(player);
+                break;
+            } else if (isFull()) {
+                printResult(0);
+                break;
+            } else player = player == 1 ? 2 : 1;
+        }
     }
 }
