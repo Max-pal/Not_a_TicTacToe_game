@@ -26,7 +26,7 @@ public class Game implements GameInterface {
 	int rowNumber = this.board.length;
 	int colNumber = this.board[0].length;
 
-	int firstRowCharValue = (int) FIRST_RAW_CHAR;
+	int firstRowCharValue = (int) FIRST_ROW_CHAR;
 	int lastRowCharValue = firstRowCharValue + rowNumber - 1;
 	char lastRowChar = (char) lastRowCharValue;
 
