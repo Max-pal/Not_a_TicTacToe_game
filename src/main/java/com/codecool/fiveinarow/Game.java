@@ -41,20 +41,30 @@ public class Game implements GameInterface {
 	    	System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
 	    	System.out.println("Next player: " + player);
 	    	userInput = scan.next();
+		int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
 
-		coordinates[0] = (int) Character.toUpperCase(userInput.charAt(0)) - firstRowCharValue;
+		coordinates[0] = firstCharInputValue - firstRowCharValue;
 	    	coordinates[1] = Integer.parseInt(userInput.substring(1)) - 1;
 
-		if (coordinates[0] < firstRowCharValue || coordinates[0] > lastRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1) {
-		    throw new NumberFormatException("Coordinates are out of board, please try again!");
+		if (coordinates[0] < 0 || coordinates[0] > lastRowCharValue - firstRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1) {
+		    throw new ArrayIndexOutOfBoundsException("Coordinates are out of board");
 		}
+		if (this.board[coordinates[0]][coordinates[1]] != 0) {
+		    throw new ArithmeticException("The field of entered coordinates are occupied");
+		}
+
 		validInput = true;
 	    }
 	    catch(NumberFormatException e) {
 	    	System.out.println("Invalid column number entered after first character, please try again!");
 	    }
+	    catch(ArrayIndexOutOfBoundsException e) {
+		System.out.println("Coordinates are out of board size, please try again");
+	    }
+	    catch(ArithmeticException e) {
+		System.out.println("The field of entered coordinates is ocuupied, please try again!");
+	    }
 	}
-
         return coordinates;
     }
 
