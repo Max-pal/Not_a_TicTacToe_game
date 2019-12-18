@@ -144,6 +144,13 @@ public class Game implements GameInterface {
     }
 
     public void printResult(int player) {
+        char winnerSymbol = View.cellSymbols[player];
+        char tieSymbol = '.';
+        System.out.println("Game Over");
+        if (winnerSymbol == tieSymbol)
+            System.out.println("It's a tie!");
+        else
+            System.out.println(winnerSymbol + " won!");
     }
 
     public void enableAi(int player) {
