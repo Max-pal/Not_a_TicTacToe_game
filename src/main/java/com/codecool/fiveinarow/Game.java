@@ -104,7 +104,7 @@ public class Game implements GameInterface {
     }
 
     public void play(int howMany) {
-        /* int player = 1;
+        int player = 1;
         int[] move = new int[2];
         while (true) {
             printBoard();
@@ -116,7 +116,7 @@ public class Game implements GameInterface {
             } else if (isFull()) {
                 printResult(0);
                 break;
-            }
-        } */
+            } else player = player == 1 ? 2 : 1;
+        }
     }
 }
