@@ -36,7 +36,10 @@ public class Game implements GameInterface {
     }
 
     public boolean isFull() {
-        return false;
+        for(int row = 0; row < view.nRows; row++)
+            for(int col = 0; col < view.nCols; col++)
+                if (this.board[row][col] == 0) return false;
+        return true;
     }
 
     public void printBoard() {
