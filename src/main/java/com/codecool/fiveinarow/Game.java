@@ -43,8 +43,9 @@ public class Game implements GameInterface {
 	        try {
 	        	System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
 	    	    System.out.println("Next player: " + player);
+	    	    String exitCommand = scan.findInLine("quit");
 
-	    	    if (scan.findInLine("quit").equals("quit")) {
+	    	    if (exitCommand != null) {
 	    	        coordinates[0] = -1;
 	    	        coordinates[1] = -1;
 	    	        System.exit(0);
@@ -52,6 +53,7 @@ public class Game implements GameInterface {
 	    	    }
 
 	    	    userInput = scan.next();
+	    	    scan.nextLine();
 		        int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
 
 		        coordinates[0] = firstCharInputValue - firstRowCharValue;
@@ -101,16 +103,19 @@ public class Game implements GameInterface {
                 if (counterBackwardDiagonal == howMany) {
                     return true;
                 }
+            }
             if (board[i][(board.length - 1)] == player) {
                 counterForwardDiagonal++;
-                }
+
                 if (counterForwardDiagonal == howMany){
                     return true;
                 }
+            }
+
             for(int j = 0; j < board[0].length; j++) {
                 if(board[j][i] == player){
                 counterVertical++;
-            }
+                }
                 if (counterVertical == howMany) {
                     return true;
                 }
@@ -123,6 +128,7 @@ public class Game implements GameInterface {
                 }
             }
         }
+        return false;
     }
 
     public boolean isFull() {
