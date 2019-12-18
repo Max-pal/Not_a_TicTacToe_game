@@ -10,7 +10,7 @@ public class Game implements GameInterface {
     private View view;
 
     public Game(int nRows, int nCols) {
-	this.board = new int[nRows][nCols];
+	    this.board = new int[nRows][nCols];
         this.view = new View(nRows, nCols);
     }
 
@@ -23,6 +23,7 @@ public class Game implements GameInterface {
     }
 
     public int[] getMove(int player) {
+<<<<<<< HEAD
     	char FIRST_ROW_CHAR = 'A';
     	int FIRST_COL_NUMBER = 1;
 
@@ -49,25 +50,27 @@ public class Game implements GameInterface {
 		        coordinates[0] = firstCharInputValue - firstRowCharValue;
 	    	    coordinates[1] = Integer.parseInt(userInput.substring(1)) - 1;
 
-    		if (coordinates[0] < 0 || coordinates[0] > lastRowCharValue - firstRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1) {
-    		    throw new ArrayIndexOutOfBoundsException("Coordinates are out of board");
-	       	}
-	    	if (this.board[coordinates[0]][coordinates[1]] != 0) {
-		        throw new ArithmeticException("The field of entered coordinates are occupied");
-		}
+		        if (coordinates[0] < 0 || coordinates[0] > lastRowCharValue - firstRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1)
+		            throw new ArrayIndexOutOfBoundsException("Coordinates are out of board");
 
-		validInput = true;
+		        if (this.board[coordinates[0]][coordinates[1]] != 0)
+		            throw new ArithmeticException("The field of entered coordinates are occupied");
+
+		        validInput = true;
+	        }
+
+	        catch(NumberFormatException e) {
+	    	    System.out.println("Invalid column number entered after first character, please try again!");
+	        }
+
+	        catch(ArrayIndexOutOfBoundsException e) {
+		        System.out.println("Coordinates are out of board size, please try again!");
+	        }
+
+	        catch(ArithmeticException e) {
+    		    System.out.println("The field of entered coordinates is occupied, please try again!");
+	        }
 	    }
-	    catch(NumberFormatException e) {
-	    	System.out.println("Invalid column number entered after first character, please try again!");
-	    }
-	    catch(ArrayIndexOutOfBoundsException e) {
-		System.out.println("Coordinates are out of board size, please try again");
-	    }
-	    catch(ArithmeticException e) {
-		System.out.println("The field of entered coordinates is ocuupied, please try again!");
-	    }
-	}
         return coordinates;
     }
 
