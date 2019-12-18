@@ -23,37 +23,37 @@ public class Game implements GameInterface {
     }
 
     public int[] getMove(int player) {
-	char FIRST_ROW_CHAR = 'A';
-	int FIRST_COL_NUMBER = 1;
+    	char FIRST_ROW_CHAR = 'A';
+    	int FIRST_COL_NUMBER = 1;
 
-	int rowNumber = this.board.length;
-	int colNumber = this.board[0].length;
+    	int rowNumber = this.board.length;
+    	int colNumber = this.board[0].length;
 
-	int firstRowCharValue = (int) FIRST_ROW_CHAR;
-	int lastRowCharValue = firstRowCharValue + rowNumber - 1;
-	char lastRowChar = (char) lastRowCharValue;
+    	int firstRowCharValue = (int) FIRST_ROW_CHAR;
+    	int lastRowCharValue = firstRowCharValue + rowNumber - 1;
+    	char lastRowChar = (char) lastRowCharValue;
 
-	String userInput;
-	int[] coordinates = new int[2];
+    	String userInput;
+    	int[] coordinates = new int[2];
 
-	Scanner scan = new Scanner(System.in);
-	boolean validInput = false;
+    	Scanner scan = new Scanner(System.in);
+    	boolean validInput = false;
 
-	while (validInput == false) {
-	    try {
-	    	System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
-	    	System.out.println("Next player: " + player);
-	    	userInput = scan.next();
-		int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
+    	while (validInput == false) {
+	        try {
+	        	System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
+	    	    System.out.println("Next player: " + player);
+	    	    userInput = scan.next();
+		        int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
 
-		coordinates[0] = firstCharInputValue - firstRowCharValue;
-	    	coordinates[1] = Integer.parseInt(userInput.substring(1)) - 1;
+		        coordinates[0] = firstCharInputValue - firstRowCharValue;
+	    	    coordinates[1] = Integer.parseInt(userInput.substring(1)) - 1;
 
-		if (coordinates[0] < 0 || coordinates[0] > lastRowCharValue - firstRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1) {
-		    throw new ArrayIndexOutOfBoundsException("Coordinates are out of board");
-		}
-		if (this.board[coordinates[0]][coordinates[1]] != 0) {
-		    throw new ArithmeticException("The field of entered coordinates are occupied");
+    		if (coordinates[0] < 0 || coordinates[0] > lastRowCharValue - firstRowCharValue || coordinates[1] < FIRST_COL_NUMBER - 1 || coordinates[1] > colNumber - 1) {
+    		    throw new ArrayIndexOutOfBoundsException("Coordinates are out of board");
+	       	}
+	    	if (this.board[coordinates[0]][coordinates[1]] != 0) {
+		        throw new ArithmeticException("The field of entered coordinates are occupied");
 		}
 
 		validInput = true;
