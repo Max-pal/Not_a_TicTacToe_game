@@ -54,5 +54,19 @@ public class Game implements GameInterface {
     }
 
     public void play(int howMany) {
+        /* int player = 1;
+        int[] move = new int[2];
+        while (true) {
+            printBoard();
+            move = getMove(player);
+            mark(player, move[0], move[1]);
+            if (hasWon(player, howMany)) {
+                printResult(player);
+                break;
+            } else if (isFull()) {
+                printResult(0);
+                break;
+            }
+        } */
     }
 }
