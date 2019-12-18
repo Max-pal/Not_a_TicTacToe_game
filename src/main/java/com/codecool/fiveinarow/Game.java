@@ -27,14 +27,21 @@ public class Game implements GameInterface {
     }
 
     public boolean hasWon(int player, int howMany) {
-        int counterDiagonal = 1;
+        int counterForwardDiagonal = 1;
+        int counterBackwardDiagonal = 1;
         int counterVertical = 1;
         int counterHorizontal = 1;
         for(int i = 0; i < board.length; i++) {
             if (board[i][i] == player) {
-                counterDiagonal++;
+                counterBackwardDiagonal++;
 
-                if (counterDiagonal == howMany) {
+                if (counterBackwardDiagonal == howMany) {
+                    return true;
+                }
+            if (board[i][(board.length - 1)] == player) {
+                counterForwardDiagonal++;
+                }
+                if (counterForwardDiagonal == howMany){
                     return true;
                 }
             for(int j = 0; j < board[0].length; j++) {
