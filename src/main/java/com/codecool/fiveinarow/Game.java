@@ -1,4 +1,5 @@
 package com.codecool.fiveinarow;
+import java.util.Arrays;
 
 import java.util.Scanner;
 import java.lang.Character;
@@ -6,9 +7,11 @@ import java.lang.Character;
 public class Game implements GameInterface {
 
     private int[][] board;
+    private View view;
 
     public Game(int nRows, int nCols) {
 	this.board = new int[nRows][nCols];
+        this.view = new View(nRows, nCols);
     }
 
     public int[][] getBoard() {
@@ -73,6 +76,7 @@ public class Game implements GameInterface {
     }
 
     public void mark(int player, int row, int col) {
+        this.board[row][col] = player;
     }
 
     public boolean hasWon(int player, int howMany) {
@@ -80,10 +84,15 @@ public class Game implements GameInterface {
     }
 
     public boolean isFull() {
-        return false;
+        for(int row = 0; row < view.nRows; row++)
+            for(int col = 0; col < view.nCols; col++)
+                if (this.board[row][col] == 0) return false;
+        return true;
     }
 
     public void printBoard() {
+        String printableBoard = view.renderBoard(this.board);
+        System.out.println(printableBoard);
     }
 
     public void printResult(int player) {
