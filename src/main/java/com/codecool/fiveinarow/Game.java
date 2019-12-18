@@ -82,7 +82,39 @@ public class Game implements GameInterface {
     }
 
     public boolean hasWon(int player, int howMany) {
-        return false;
+        int counterForwardDiagonal = 1;
+        int counterBackwardDiagonal = 1;
+        int counterVertical = 1;
+        int counterHorizontal = 1;
+        for(int i = 0; i < board.length; i++) {
+            if (board[i][i] == player) {
+                counterBackwardDiagonal++;
+
+                if (counterBackwardDiagonal == howMany) {
+                    return true;
+                }
+            if (board[i][(board.length - 1)] == player) {
+                counterForwardDiagonal++;
+                }
+                if (counterForwardDiagonal == howMany){
+                    return true;
+                }
+            for(int j = 0; j < board[0].length; j++) {
+                if(board[j][i] == player){
+                counterVertical++;
+            }
+                if (counterVertical == howMany) {
+                    return true;
+                }
+
+                if(board[i][j] == player)
+                    counterHorizontal++;
+
+                if (counterHorizontal == howMany) {
+                    return true;
+                }
+            }
+        }
     }
 
     public boolean isFull() {
