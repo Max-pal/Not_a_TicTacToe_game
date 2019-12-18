@@ -5,6 +5,7 @@ public class View {
     private final static char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     private final static char[] cellSymbols = {'.', 'X', 'O'};
     private final static byte cellPadding = 4;
+    public final static String clearSequence = "\033[H\033[2J";
     public final int nRows;
     public final int nCols;
     private final String columnHeaders;
