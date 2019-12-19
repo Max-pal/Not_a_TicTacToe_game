@@ -23,6 +23,10 @@ public class View {
         return columnHeaders.toString();
     }
 
+    public static void clearConsole() {
+        System.out.print(clearSequence);
+    }
+
     public String renderBoard(int[][] board) {
         StringBuilder printable = new StringBuilder(this.columnHeaders);
 

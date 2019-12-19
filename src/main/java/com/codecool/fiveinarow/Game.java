@@ -8,6 +8,7 @@ public class Game implements GameInterface {
 
     private int[][] board;
     private View view;
+    private boolean[] aiStates = {false, false};
 
     public Game(int nRows, int nCols) {
 	    this.board = new int[nRows][nCols];
@@ -147,11 +148,13 @@ public class Game implements GameInterface {
     }
 
     public void enableAi(int player) {
+        this.aiStates[player - 1] = true;
     }
 
     public void play(int howMany) {
         int player = 1;
         int[] move = new int[2];
+
         while (true) {
             printBoard();
             move = getMove(player);
