@@ -26,9 +26,15 @@ public class Config {
     }
 
     private void setMainMenu() {
+        String aiPlayerSpec = "";
+        if (this.currentGameMode.equals(gameModes[1]))
+            if (this.aiStates[0])
+                aiPlayerSpec = " | 2nd vs 1st";
+            else
+                aiPlayerSpec = " | 1st vs 2nd";
         this.mainMenu = "Choose an option:\n\n" +
                             "\t(1) Launch game\n" +
-                            String.format("\t(2) Set game mode (current: %s)\n", this.currentGameMode) +
+                            String.format("\t(2) Set game mode (current: %s)\n", this.currentGameMode + aiPlayerSpec) +
                             String.format("\t(3) Configure board dimensions (current: %d x %d)\n", this.width, this.height) +
                             String.format("\t(4) Set length of winning sequence (current: %d)\n", this.howMany) +
                             "\t(0) Exit\n\n" +
@@ -78,6 +84,13 @@ public class Config {
         }
     }
 
+    private void setAiPlayer() {
+        Arrays.fill(this.aiStates, Boolean.valueOf(false));
+        String prompt = "Choose player number for AI (1/2): ";
+        int aiPlayer = Integer.parseInt(getUserInput(prompt, new String[] {"1", "2"}));
+        this.aiStates[aiPlayer - 1] = true;
+    }
+
     private void setGameMode() {
         String[] validOptions = getStringArrayOfRange(1, 4);
         String option = getUserInput(gameModeMenu, validOptions);
@@ -86,7 +99,7 @@ public class Config {
                 Arrays.fill(this.aiStates, Boolean.valueOf(false));
                 break;
             case "2":
-                this.aiStates[1] = true;
+                setAiPlayer();
                 break;
             case "3":
                 Arrays.fill(this.aiStates, Boolean.valueOf(true));
