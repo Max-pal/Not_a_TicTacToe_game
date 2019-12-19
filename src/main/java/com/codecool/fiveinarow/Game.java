@@ -116,67 +116,46 @@ public class Game implements GameInterface {
         int rowCount = board.length;
         int columnCount = board[0].length;
 
-        int counterForwardDiagonal = 1;
-        int counterBackwardDiagonal = 1;
-        int counterVertical = 1;
-        int counterHorizontal = 1;
+        int counterForwardDiagonal = 0;
+        int counterBackwardDiagonal = 0;
+        int counterVertical = 0;
+        int counterHorizontal = 0;
 
-        for (int r = 0; r < rowCount; r++) {
-            for (int row = r, col = 0; row >= 0 && col < columnCount; row--, col++) {
-                if ((board[row][col] != player) || (board[row][col] != player)) {
-                    counterForwardDiagonal = 0;
-                } else {
-                    counterForwardDiagonal++;
-                }
-                if (counterForwardDiagonal == howMany) {
-                    return true;
-                }
+        for (int topRow = rowCount - howMany; topRow > 0; topRow--)
+            for (
+                    int row = topRow, backwardCol = 0, forwardCol = columnCount - 1;
+                    row < rowCount && backwardCol < columnCount;
+                    row++, backwardCol++, forwardCol--
+            ) {
+                counterForwardDiagonal = (board[row][forwardCol] == player) ? counterForwardDiagonal + 1 : 0;
+                counterBackwardDiagonal = (board[row][backwardCol] == player) ? counterBackwardDiagonal + 1 : 0;
+                if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
-        }
 
-        for (int c = 1; c < columnCount; c++) {
-            for (int row = rowCount - 1, col = c; row >= 0 && col < columnCount; row--, col++) {
-                if ((board[row][col] != player) || (board[row][col] != player)) {
-                    counterBackwardDiagonal = 0;
-                } else {
-                    counterBackwardDiagonal++;
-                }
-                if (counterBackwardDiagonal == howMany) {
-                    return true;
-                }
+        for (int topBackwardCol = 0, topForwardCol = columnCount - 1; topBackwardCol <= columnCount - howMany; topBackwardCol++, topForwardCol--)
+            for (
+                    int row = 0, backwardCol = topBackwardCol, forwardCol = topForwardCol;
+                    row < rowCount && backwardCol < columnCount;
+                    row++, backwardCol++, forwardCol--
+            ) {
+                System.out.println(howMany);
+                counterForwardDiagonal = (board[row][forwardCol] == player) ? counterForwardDiagonal + 1 : 0;
+                counterBackwardDiagonal = (board[row][backwardCol] == player) ? counterBackwardDiagonal + 1 : 0;
+                if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
-        }
 
-        for (int i = 0; i < board.length; i++) {
-            // if (board[i][i] == player) {
-            //     counterBackwardDiagonal++;
-            //
-            //     if (counterBackwardDiagonal == howMany) {
-            //         return true;
-            //     }
-            //
-            //     if (board[i][(board.length - 1)] == player) {
-            //         counterForwardDiagonal++;
-            //     }
-            //     if (counterForwardDiagonal == howMany) {
-            //         return true;
-            //     }
-            for (int j = 0; j < board[0].length; j++) {
-                if ((board[i][(board.length - 1)] != player) || (board[i][(board.length - 1)] != 0)) {
-                    counterVertical = 0;
-                } else {
-                    counterVertical++;
-                }
+        for (int i = 0; i < columnCount; i++) {
+            for (int j = 0; j < rowCount; j++) {
+                counterVertical = (board[j][i] == player) ? counterVertical + 1 : 0;
                 if (counterVertical == howMany) {
                     return true;
                 }
+            }
+        }
 
-                if ((board[i][(board.length - 1)] != player) || (board[i][(board.length - 1)] != 0)) {
-                    counterHorizontal = 0;
-                } else {
-                    counterHorizontal++;
-                }
-
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                counterHorizontal = (board[i][j] == player) ? counterHorizontal + 1 : 0;
                 if (counterHorizontal == howMany) {
                     return true;
                 }

@@ -114,7 +114,7 @@ public class Config {
 
         this.width = Integer.parseInt(getUserInput(widthPrompt, validWidths));
         this.height = Integer.parseInt(getUserInput(heightPrompt, validHeights));
-        if (this.width < maxHowMany && this.height < maxHowMany)
+        if (this.width < this.howMany && this.height < this.howMany)
             this.howMany = (this.width < this.height) ? this.width : this.height;
 
         initMainMenu();
