@@ -202,4 +202,85 @@ public class Game implements GameInterface {
             } else player = player == 1 ? 2 : 1;
         }
     }
+    public int[][][] getWinningMoveOptions(int howMany) {
+        // Horizontal check for howMany - 1
+        int[][][] horizontalOptions;
+        int countOfHorizontalOptions = this.board.length * (this.board[0].length - (howMany - 1));
+        horizontalOptions = new int[countOfHorizontalOptions][howMany - 1][2];
+
+        int horizontalIndexCounter = 0;
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j <= this.board[0].length - (howMany - 1); j++) {
+                for (int k = 0; k < howMany - 1; k++) {
+                    horizontalOptions[horizontalIndexCounter][k][0] = i;
+                    horizontalOptions[horizontalIndexCounter][k][1] = j + k;
+                }
+                horizontalIndexCounter++;
+            }
+        }
+
+        int[][][] verticalOptions;
+        int countOfVerticalOptions = this.board[0].length * (this.board.length - (howMany - 1));
+        verticalOptions = new int[countOfVerticalOptions][howMany - 1][2];
+
+        int  verticalIndexCounter = 0;
+        for (int j = 0; j < this.board[0].length; j++) {
+            for (int i = 0; i <= this.board.length - (howMany - 1); j++) {
+                for (int k = 0; k < howMany - 1; k++) {
+                    verticalOptions[verticalIndexCounter][k][0] = i + k;
+                    verticalOptions[verticalIndexCounter][k][1] = j;
+                }
+                verticalIndexCounter++;
+            }
+        }
+
+        int[][][] upDownDiagonalOptions;
+        int countOfOneWayDiagonalOptions = (this.board.length - (howMany - 1)) * (this.board[0].length - (howMany - 1));
+        upDownDiagonalOptions = new int[countOfOneWayDiagonalOptions][howMany - 1][2];
+
+        int upDownDiagonalIndexCounter = 0;
+        for (int i = 0;  i <= this.board.length - (howMany - 1); i++) {
+            for(int j = 0; j <= this.board.length - (howMany - 1); j++) {
+                for (int k = 0; k < howMany - 1; k++) {
+                    upDownDiagonalOptions[upDownDiagonalIndexCounter][k][0] = i + k;
+                    upDownDiagonalOptions[upDownDiagonalIndexCounter][k][1] = j + k;
+                }
+                upDownDiagonalIndexCounter++;
+            }
+        }
+
+        int[][][] downUpDiagonalOptions = new int[countOfOneWayDiagonalOptions][howMany - 1][2];
+
+        int downUpDiagonalIndexCounter = 0;
+        for (int i = this.board.length; i >= howMany - 1; i--) {
+            for (int j = 0; j <= this.board[0].length - (howMany - 1); j++) {
+                for (int k = 0; k < howMany - 1; k++) {
+                    downUpDiagonalOptions[downUpDiagonalIndexCounter][k][0] = i - k;
+                    downUpDiagonalOptions[downUpDiagonalIndexCounter][k][1] = j + k;
+                }
+                downUpDiagonalIndexCounter++;
+            }
+        }
+        int[][][] allWinningOptions = new int[horizontalOptions.length + verticalOptions.length + upDownDiagonalOptions.length + downUpDiagonalOptions.length][howMany - 1][2];
+        int position = 0;
+
+        for (int[][] element : horizontalOptions) {
+            allWinningOptions[position] = element;
+            position++;
+        }
+        for (int[][] element : verticalOptions) {
+            allWinningOptions[position] = element;
+            position++;
+        }
+        for (int[][] element : upDownDiagonalOptions) {
+            allWinningOptions[position] = element;
+            position++;
+        }
+        for (int[][] element : downUpDiagonalOptions) {
+            allWinningOptions[position] = element;
+            position++;
+        }
+        return allWinningOptions;
+    }
 }
+
