@@ -98,7 +98,7 @@ public class Game implements GameInterface {
         for (int r = 0; r < rowCount; r++) {
             for (int row = r, col = 0; row >= 0 && col < columnCount; row--, col++) {
                 if ((board[row][col] != player) || (board[row][col] != player)) {
-                    counterForwardDiagonal == 0;
+                    counterForwardDiagonal = 0;
                 } else {
                     counterForwardDiagonal++;
                 }
@@ -111,7 +111,7 @@ public class Game implements GameInterface {
         for (int c = 1; c < columnCount; c++) {
             for (int row = rowCount - 1, col = c; row >= 0 && col < columnCount; row--, col++) {
                 if ((board[row][col] != player) || (board[row][col] != player)) {
-                    counterBackwardDiagonal == 0;
+                    counterBackwardDiagonal = 0;
                 } else {
                     counterBackwardDiagonal++;
                 }
