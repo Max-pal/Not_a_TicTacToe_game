@@ -83,12 +83,16 @@ public class Game implements GameInterface {
     public int[] getAiMove(int player) {
         int[] pickDirectWin = this.getAiMoveByWinOptions(player);
         if (pickDirectWin[0] != -1) {
+            try {TimeUnit.SECONDS.sleep(1);}
+            catch (InterruptedException e) {}
             return pickDirectWin;
         }
 
         int enemy = player == 1 ? 2 : 1;
         int[] preventDirectLose = this.getAiMoveByWinOptions(enemy);
         if (preventDirectLose[0] != -1) {
+            try {TimeUnit.SECONDS.sleep(1);}
+            catch (InterruptedException e) {}
             return preventDirectLose;
         }
 
