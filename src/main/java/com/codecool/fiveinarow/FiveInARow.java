@@ -9,7 +9,7 @@ public class FiveInARow {
         config.initMainMenu();
 
         Game game = new Game(config.width, config.height);
-        game.play(5);
+        game.play(config.howMany);
     }
 
 }

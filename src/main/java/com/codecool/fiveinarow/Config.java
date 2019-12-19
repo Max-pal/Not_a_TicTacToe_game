@@ -77,6 +77,7 @@ public class Config {
             case "0":
                 System.exit(0);
                 break;
+        }
     }
 
     private void setGameMode() {
@@ -113,15 +114,23 @@ public class Config {
 
         this.width = Integer.parseInt(getUserInput(widthPrompt, validWidths));
         this.height = Integer.parseInt(getUserInput(heightPrompt, validHeights));
+        if (this.width < maxHowMany && this.height < maxHowMany)
+            this.howMany = (this.width < this.height) ? this.width : this.height;
 
         initMainMenu();
     }
 
     private void setHowMany() {
-        String[] validOptions = getStringArrayOfRange(minHowMany, maxHowMany + 1);
-        String prompt = String.format("Specify length (%d <= length <= %d): ", minHowMany, maxHowMany);
+        int maxHowMany_ = maxHowMany;
+        if (this.height < maxHowMany && this.width < maxHowMany)
+            maxHowMany_ = (this.width < this.height) ? this.width : this.height;
+
+        String[] validOptions = getStringArrayOfRange(minHowMany, maxHowMany_ + 1);
+        String prompt = String.format("Specify length (%d <= length <= %d): ", minHowMany, maxHowMany_);
+
         String input = getUserInput(prompt, validOptions);
         this.howMany = Integer.parseInt(input);
+
         initMainMenu();
     }
 
