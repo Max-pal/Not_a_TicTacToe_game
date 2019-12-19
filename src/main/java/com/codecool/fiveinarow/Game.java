@@ -122,8 +122,7 @@ public class Game implements GameInterface {
         int counterBackwardDiagonal = 0;
         int counterVertical = 0;
         int counterHorizontal = 0;
-
-        for (int topRow = rowCount - howMany; topRow > 0; topRow--)
+        for (int topRow = rowCount - howMany; topRow > 0; topRow--) {
             for (
                     int row = topRow, backwardCol = 0, forwardCol = columnCount - 1;
                     row < rowCount && backwardCol < columnCount;
@@ -134,8 +133,13 @@ public class Game implements GameInterface {
                 if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
             counterForwardDiagonal = counterBackwardDiagonal = 0;
+        }
 
-        for (int topBackwardCol = 0, topForwardCol = columnCount - 1; topBackwardCol <= columnCount - howMany; topBackwardCol++, topForwardCol--)
+        for (
+                int topBackwardCol = 0, topForwardCol = columnCount - 1;
+                topBackwardCol <= columnCount - howMany;
+                topBackwardCol++, topForwardCol--
+        ) {
             for (
                     int row = 0, backwardCol = topBackwardCol, forwardCol = topForwardCol;
                     row < rowCount && backwardCol < columnCount;
@@ -146,6 +150,7 @@ public class Game implements GameInterface {
                 if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
             counterForwardDiagonal = counterBackwardDiagonal = 0;
+        }
 
         for (int i = 0; i < columnCount; i++) {
             for (int j = 0; j < rowCount; j++) {
@@ -179,7 +184,7 @@ public class Game implements GameInterface {
 
     public void printBoard() {
         String printableBoard = view.renderBoard(this.board);
-        System.out.println(View.clearSequence + printableBoard);
+        System.out.println(/*View.clearSequence + */printableBoard);
     }
 
     public void printResult(int player) {
