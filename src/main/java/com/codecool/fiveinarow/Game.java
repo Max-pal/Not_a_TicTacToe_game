@@ -1,8 +1,8 @@
 package com.codecool.fiveinarow;
 
 import java.util.Arrays;
-
 import java.util.Scanner;
+import java.util.Random;
 import java.lang.Character;
 
 public class Game implements GameInterface {
@@ -79,7 +79,32 @@ public class Game implements GameInterface {
     }
 
     public int[] getAiMove(int player) {
-        return null;
+        int[][] allValidMoves;
+        int emptyCellCounter = 0;
+
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board[0].length; j++) {
+                if (this.board[i][j] == 0) {
+                    emptyCellCounter++;
+                }
+            }
+        }
+        allValidMoves = new int[emptyCellCounter][2];
+
+        int indexCounter = 0;
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board[0].length; j++) {
+                if (this.board[i][j] == 0) {
+                    allValidMoves[indexCounter][0] = i;
+                    allValidMoves[indexCounter][1] = j;
+                    indexCounter++;
+                }
+            }
+        }
+        Random shuffler = new Random();
+        int[] aiMove = allValidMoves[shuffler.nextInt(emptyCellCounter)];
+
+        return aiMove;
     }
 
     public void mark(int player, int row, int col) {
