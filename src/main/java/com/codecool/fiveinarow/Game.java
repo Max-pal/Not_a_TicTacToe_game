@@ -97,35 +97,39 @@ public class Game implements GameInterface {
         int counterBackwardDiagonal = 1;
         int counterVertical = 1;
         int counterHorizontal = 1;
-        for(int i = 0; i < board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][i] == player) {
                 counterBackwardDiagonal++;
 
                 if (counterBackwardDiagonal == howMany) {
                     return true;
                 }
-            }
-            if (board[i][(board.length - 1)] == player) {
-                counterForwardDiagonal++;
 
-                if (counterForwardDiagonal == howMany){
+                if (board[i][(board.length - 1)] == player) {
+                    counterForwardDiagonal++;
+                }
+                if (counterForwardDiagonal == howMany) {
                     return true;
                 }
-            }
+                for (int j = 0; j < board[0].length; j++) {
+                    if ((board[i][(board.length - 1)] != player) || (board[i][(board.length - 1)] != 0)) {
+                        counterVertical = 0;
+                    } else {
+                        counterVertical++;
+                    }
+                    if (counterVertical == howMany) {
+                        return true;
+                    }
 
-            for(int j = 0; j < board[0].length; j++) {
-                if(board[j][i] == player){
-                counterVertical++;
-                }
-                if (counterVertical == howMany) {
-                    return true;
-                }
+                    if ((board[i][(board.length - 1)] != player) || (board[i][(board.length - 1)] != 0)) {
+                        counterHorizontal = 0;
+                    } else {
+                        counterHorizontal++;
+                    }
 
-                if(board[i][j] == player)
-                    counterHorizontal++;
-
-                if (counterHorizontal == howMany) {
-                    return true;
+                    if (counterHorizontal == howMany) {
+                        return true;
+                    }
                 }
             }
         }
@@ -145,6 +149,13 @@ public class Game implements GameInterface {
     }
 
     public void printResult(int player) {
+        char winnerSymbol = View.cellSymbols[player];
+        char tieSymbol = '.';
+        System.out.println("Game Over");
+        if (winnerSymbol == tieSymbol)
+            System.out.println("It's a tie!");
+        else
+            System.out.println(winnerSymbol + " won!");
     }
 
     public void enableAi(int player) {
