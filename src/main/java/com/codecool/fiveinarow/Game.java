@@ -9,6 +9,7 @@ public class Game implements GameInterface {
 
     private int[][] board;
     private View view;
+    public int[][][] allWinOptionsInOneMove;
 
     public Game(int nRows, int nCols) {
 	    this.board = new int[nRows][nCols];
@@ -85,9 +86,19 @@ public class Game implements GameInterface {
     }
 
     public int[] getAiMove(int player) {
+        int[] pickDirectWin = this.getAiMoveByWinOptions(player);
+        if (pickDirectWin[0] == -1) {
+            return pickDirectWin;
+        }
+
+        int enemy = player == 1 ? 2 : 1;
+        int[] preventDirectLose = this.getAiMoveByWinOptions(enemy);
+        if (preventDirectLose[0] == -1) {
+            return preventDirectLose;
+        }
+
         int[][] allValidMoves;
         int emptyCellCounter = 0;
-
         for (int i = 0; i < this.board.length; i++) {
             for (int j = 0; j < this.board[0].length; j++) {
                 if (this.board[i][j] == 0) {
@@ -187,6 +198,7 @@ public class Game implements GameInterface {
     }
 
     public void play(int howMany) {
+        this.allWinOptionsInOneMove = getWinningMoveOptions(howMany);
         int player = 1;
         int[] move = new int[2];
         while (true) {
@@ -203,7 +215,6 @@ public class Game implements GameInterface {
         }
     }
     public int[][][] getWinningMoveOptions(int howMany) {
-        // Horizontal check for howMany - 1
         int[][][] horizontalOptions;
         int countOfHorizontalOptions = this.board.length * (this.board[0].length - (howMany - 1));
         horizontalOptions = new int[countOfHorizontalOptions][howMany - 1][2];
@@ -282,5 +293,46 @@ public class Game implements GameInterface {
         }
         return allWinningOptions;
     }
-}
 
+    public int[] getAiMoveByWinOptions(int player) {
+        int[] aiMove = new int[2];
+        for (int[][] element : this.allWinOptionsInOneMove) {
+            int first = this.board[element[0][0]][element[0][1]];
+            boolean flag = true;
+            if (first != player) {
+                flag = false;
+                continue;
+            }
+            else {
+                for (int i = 1; i < element.length && flag; i++) {
+                    if (this.board[element[1][0]][element[1][1]] != player) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    int horizontalStep = element[1][0] - element[0][0];
+                    int verticalStep = element[0][1] - element[0][0];
+                    int nextFieldRowAtStart = element[0][0] - horizontalStep;
+                    int nextFieldColAtStart = element[0][1] - verticalStep;
+                    int nextFieldRowAtEnd = element[element.length - 1][0] + horizontalStep;
+                    int nextFieldColAtEnd = element[element.length - 1][1] + verticalStep;
+
+                    if ((nextFieldRowAtStart >= 0 || nextFieldRowAtStart < this.board.length) && nextFieldColAtStart >= 0 && this.board[nextFieldRowAtStart][nextFieldColAtStart] == 0) {
+                        aiMove[0] = nextFieldRowAtStart;
+                        aiMove[1] = nextFieldColAtStart;
+                        return aiMove;
+                    }
+                    else if ((nextFieldRowAtEnd >= 0 || nextFieldRowAtEnd < this.board.length) && nextFieldColAtEnd < this.board[0].length && this.board[nextFieldRowAtEnd][nextFieldColAtEnd] == 0) {
+                        aiMove[0] = nextFieldRowAtEnd;
+                        aiMove[1] = nextFieldColAtEnd;
+                        return aiMove;
+                    }
+                }
+            }
+        }
+        aiMove[0] = -1;
+        aiMove[1] = -1;
+        return aiMove;
+    }
+}
