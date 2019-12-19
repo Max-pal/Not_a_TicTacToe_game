@@ -1,7 +1,6 @@
 package com.codecool.fiveinarow;
 
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.lang.Character;
@@ -39,24 +38,24 @@ public class Game implements GameInterface {
         String userInput;
         int[] coordinates = new int[2];
 
-        Scanner scan = new Scanner(System.in);
         boolean validInput = false;
 
         while (validInput == false) {
             try {
                 System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
                 System.out.println("Next player: " + player);
-                String exitCommand = scan.findInLine("quit");
+                String exitCommand = FiveInARow.scanner.findInLine("quit");
 
                 if (exitCommand != null) {
                     coordinates[0] = -1;
                     coordinates[1] = -1;
+                    FiveInARow.scanner.close();
                     System.exit(0);
                     return coordinates;
                 }
 
-                userInput = scan.next();
-                scan.nextLine();
+                userInput = FiveInARow.scanner.next();
+                FiveInARow.scanner.nextLine();
                 int firstCharInputValue = (int) Character.toUpperCase(userInput.charAt(0));
 
                 coordinates[0] = firstCharInputValue - firstRowCharValue;
@@ -198,6 +197,11 @@ public class Game implements GameInterface {
         this.aiStates[player - 1] = true;
     }
 
+    private void waitForEnter() {
+        System.out.println("\n(Enter) Main menu");
+        FiveInARow.scanner.nextLine();
+    }
+
     public void play(int howMany) {
         int player = 1;
         int[] move = new int[2];
@@ -218,5 +222,6 @@ public class Game implements GameInterface {
                 break;
             } else player = player == 1 ? 2 : 1;
         }
+        waitForEnter();
     }
 }

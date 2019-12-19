@@ -1,6 +1,5 @@
 package com.codecool.fiveinarow;
 
-import java.util.Scanner;
 import java.util.Arrays;
 
 public class Config {
@@ -38,11 +37,10 @@ public class Config {
 
     private static String getUserInput(String prompt, String[] validInputs) {
         String choice;
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.print(prompt);
-            choice = scanner.nextLine().trim();
+            choice = FiveInARow.scanner.nextLine().trim();
             for (String validChoice : validInputs) {
                 if (choice.equals(validChoice)) {
                     View.clearConsole();
