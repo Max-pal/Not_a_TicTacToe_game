@@ -4,9 +4,11 @@ public class FiveInARow {
 
     public static void main(String[] args) {
         View.clearConsole();
-        int[] boardDimensions = Config.getBoardDimensions();
-        Game game = new Game(boardDimensions[0], boardDimensions[1]);
-        Config.initGame(game);
+
+        Config config = new Config(3, 8, 5);
+        config.initMainMenu();
+
+        Game game = new Game(config.width, config.height);
         game.play(5);
     }
 
