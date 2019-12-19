@@ -88,7 +88,7 @@ public class Config {
                 Arrays.fill(this.aiStates, Boolean.valueOf(false));
                 break;
             case "2":
-                this.aiStates[0] = true;
+                this.aiStates[1] = true;
                 break;
             case "3":
                 Arrays.fill(this.aiStates, Boolean.valueOf(true));
@@ -132,6 +132,12 @@ public class Config {
         this.howMany = Integer.parseInt(input);
 
         initMainMenu();
+    }
+
+    public void initGame(Game game) {
+        for (int i = 0; i < 2; i++)
+            if (this.aiStates[i])
+                game.enableAi(i + 1);
     }
 
 }

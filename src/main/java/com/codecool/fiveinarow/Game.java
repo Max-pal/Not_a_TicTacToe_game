@@ -3,6 +3,7 @@ package com.codecool.fiveinarow;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.lang.Character;
 
 public class Game implements GameInterface {
@@ -105,6 +106,8 @@ public class Game implements GameInterface {
         Random shuffler = new Random();
         int[] aiMove = allValidMoves[shuffler.nextInt(emptyCellCounter)];
 
+        try {TimeUnit.SECONDS.sleep(1);}
+        catch (InterruptedException e) {}
         return aiMove;
     }
 
@@ -131,6 +134,7 @@ public class Game implements GameInterface {
                 counterBackwardDiagonal = (board[row][backwardCol] == player) ? counterBackwardDiagonal + 1 : 0;
                 if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
+            counterForwardDiagonal = counterBackwardDiagonal = 0;
 
         for (int topBackwardCol = 0, topForwardCol = columnCount - 1; topBackwardCol <= columnCount - howMany; topBackwardCol++, topForwardCol--)
             for (
@@ -138,11 +142,11 @@ public class Game implements GameInterface {
                     row < rowCount && backwardCol < columnCount;
                     row++, backwardCol++, forwardCol--
             ) {
-                System.out.println(howMany);
                 counterForwardDiagonal = (board[row][forwardCol] == player) ? counterForwardDiagonal + 1 : 0;
                 counterBackwardDiagonal = (board[row][backwardCol] == player) ? counterBackwardDiagonal + 1 : 0;
                 if (counterForwardDiagonal == howMany || counterBackwardDiagonal == howMany) return true;
             }
+            counterForwardDiagonal = counterBackwardDiagonal = 0;
 
         for (int i = 0; i < columnCount; i++) {
             for (int j = 0; j < rowCount; j++) {
@@ -151,6 +155,7 @@ public class Game implements GameInterface {
                     return true;
                 }
             }
+            counterVertical = 0;
         }
 
         for (int i = 0; i < rowCount; i++) {
@@ -160,6 +165,7 @@ public class Game implements GameInterface {
                     return true;
                 }
             }
+            counterHorizontal = 0;
         }
         return false;
     }
@@ -180,6 +186,7 @@ public class Game implements GameInterface {
     public void printResult(int player) {
         char winnerSymbol = View.cellSymbols[player];
         char tieSymbol = '.';
+        printBoard();
         System.out.println("Game Over");
         if (winnerSymbol == tieSymbol)
             System.out.println("It's a tie!");
@@ -197,7 +204,11 @@ public class Game implements GameInterface {
 
         while (true) {
             printBoard();
-            move = getMove(player);
+            if (this.aiStates[player - 1])
+                move = getAiMove(player);
+            else
+                move = getMove(player);
+
             mark(player, move[0], move[1]);
             if (hasWon(player, howMany)) {
                 printResult(player);
