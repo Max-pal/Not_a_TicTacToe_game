@@ -82,13 +82,13 @@ public class Game implements GameInterface {
 
     public int[] getAiMove(int player) {
         int[] pickDirectWin = this.getAiMoveByWinOptions(player);
-        if (pickDirectWin[0] == -1) {
+        if (pickDirectWin[0] != -1) {
             return pickDirectWin;
         }
 
         int enemy = player == 1 ? 2 : 1;
         int[] preventDirectLose = this.getAiMoveByWinOptions(enemy);
-        if (preventDirectLose[0] == -1) {
+        if (preventDirectLose[0] != -1) {
             return preventDirectLose;
         }
 
@@ -238,7 +238,7 @@ public class Game implements GameInterface {
     }
     public int[][][] getWinningMoveOptions(int howMany) {
         int[][][] horizontalOptions;
-        int countOfHorizontalOptions = this.board.length * (this.board[0].length - (howMany - 1));
+        int countOfHorizontalOptions = this.board.length * (this.board[0].length - (howMany - 1)) * 2;
         horizontalOptions = new int[countOfHorizontalOptions][howMany - 1][2];
 
         int horizontalIndexCounter = 0;
@@ -253,12 +253,12 @@ public class Game implements GameInterface {
         }
 
         int[][][] verticalOptions;
-        int countOfVerticalOptions = this.board[0].length * (this.board.length - (howMany - 1));
+        int countOfVerticalOptions = this.board[0].length * (this.board.length - (howMany - 1)) * 2;
         verticalOptions = new int[countOfVerticalOptions][howMany - 1][2];
 
         int  verticalIndexCounter = 0;
         for (int j = 0; j < this.board[0].length; j++) {
-            for (int i = 0; i <= this.board.length - (howMany - 1); j++) {
+            for (int i = 0; i <= this.board.length - (howMany - 1); i++) {
                 for (int k = 0; k < howMany - 1; k++) {
                     verticalOptions[verticalIndexCounter][k][0] = i + k;
                     verticalOptions[verticalIndexCounter][k][1] = j;
@@ -268,12 +268,12 @@ public class Game implements GameInterface {
         }
 
         int[][][] upDownDiagonalOptions;
-        int countOfOneWayDiagonalOptions = (this.board.length - (howMany - 1)) * (this.board[0].length - (howMany - 1));
+        int countOfOneWayDiagonalOptions = (this.board.length - (howMany - 1)) * (this.board[0].length - (howMany - 1)) * 2;
         upDownDiagonalOptions = new int[countOfOneWayDiagonalOptions][howMany - 1][2];
 
         int upDownDiagonalIndexCounter = 0;
-        for (int i = 0;  i <= this.board.length - (howMany - 1); i++) {
-            for(int j = 0; j <= this.board.length - (howMany - 1); j++) {
+        for (int i = 0;  i < this.board.length - (howMany - 1); i++) {
+            for(int j = 0; j < this.board.length - (howMany - 1); j++) {
                 for (int k = 0; k < howMany - 1; k++) {
                     upDownDiagonalOptions[upDownDiagonalIndexCounter][k][0] = i + k;
                     upDownDiagonalOptions[upDownDiagonalIndexCounter][k][1] = j + k;
@@ -285,8 +285,8 @@ public class Game implements GameInterface {
         int[][][] downUpDiagonalOptions = new int[countOfOneWayDiagonalOptions][howMany - 1][2];
 
         int downUpDiagonalIndexCounter = 0;
-        for (int i = this.board.length; i >= howMany - 1; i--) {
-            for (int j = 0; j <= this.board[0].length - (howMany - 1); j++) {
+        for (int i = this.board.length - 1; i > howMany - 2; i--) {
+            for (int j = 0; j < this.board[0].length - (howMany - 1); j++) {
                 for (int k = 0; k < howMany - 1; k++) {
                     downUpDiagonalOptions[downUpDiagonalIndexCounter][k][0] = i - k;
                     downUpDiagonalOptions[downUpDiagonalIndexCounter][k][1] = j + k;
@@ -334,18 +334,18 @@ public class Game implements GameInterface {
                 }
                 if (flag) {
                     int horizontalStep = element[1][0] - element[0][0];
-                    int verticalStep = element[0][1] - element[0][0];
+                    int verticalStep = element[1][1] - element[0][1];
                     int nextFieldRowAtStart = element[0][0] - horizontalStep;
                     int nextFieldColAtStart = element[0][1] - verticalStep;
                     int nextFieldRowAtEnd = element[element.length - 1][0] + horizontalStep;
                     int nextFieldColAtEnd = element[element.length - 1][1] + verticalStep;
 
-                    if ((nextFieldRowAtStart >= 0 || nextFieldRowAtStart < this.board.length) && nextFieldColAtStart >= 0 && this.board[nextFieldRowAtStart][nextFieldColAtStart] == 0) {
+                    if (nextFieldRowAtStart >= 0 && nextFieldRowAtStart < this.board.length && nextFieldColAtStart >= 0 && this.board[nextFieldRowAtStart][nextFieldColAtStart] == 0) {
                         aiMove[0] = nextFieldRowAtStart;
                         aiMove[1] = nextFieldColAtStart;
                         return aiMove;
                     }
-                    else if ((nextFieldRowAtEnd >= 0 || nextFieldRowAtEnd < this.board.length) && nextFieldColAtEnd < this.board[0].length && this.board[nextFieldRowAtEnd][nextFieldColAtEnd] == 0) {
+                    if (nextFieldRowAtEnd >= 0 && nextFieldRowAtEnd < this.board.length && nextFieldColAtEnd < this.board[0].length && this.board[nextFieldRowAtEnd][nextFieldColAtEnd] == 0) {
                         aiMove[0] = nextFieldRowAtEnd;
                         aiMove[1] = nextFieldColAtEnd;
                         return aiMove;
