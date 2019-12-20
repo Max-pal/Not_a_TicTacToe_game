@@ -9,8 +9,9 @@ public class Game implements GameInterface {
 
     private int[][] board;
     private View view;
-    public int[][][] allWinOptionsInOneMove;
+    private int[][][] allWinOptionsInOneMove;
     private boolean[] aiStates = {false, false};
+    private final static int[] exitVector = {-1, -1};
 
     public Game(int nRows, int nCols) {
         this.board = new int[nRows][nCols];
@@ -52,8 +53,7 @@ public class Game implements GameInterface {
                 if (exitCommand != null) {
                     coordinates[0] = -1;
                     coordinates[1] = -1;
-                    FiveInARow.scanner.close();
-                    System.exit(0);
+                    FiveInARow.scanner.nextLine();
                     return coordinates;
                 }
 
@@ -235,6 +235,7 @@ public class Game implements GameInterface {
                 move = getAiMove(player);
             else
                 move = getMove(player);
+                if (Arrays.equals(move, exitVector)) return;
 
             mark(player, move[0], move[1]);
             if (hasWon(player, howMany)) {
