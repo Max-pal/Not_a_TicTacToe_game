@@ -199,7 +199,7 @@ public class Game implements GameInterface {
 
     public void printBoard() {
         String printableBoard = view.renderBoard(this.board);
-        System.out.println(/*View.clearSequence + */printableBoard);
+        System.out.println(View.clearSequence + printableBoard);
     }
 
     public void printResult(int player) {
