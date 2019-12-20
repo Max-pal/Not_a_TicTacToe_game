@@ -43,8 +43,10 @@ public class Game implements GameInterface {
 
         while (validInput == false) {
             try {
-                System.out.println("Enter coordinates(row letter and column number written together e.g: A1)");
-                System.out.println("Next player: " + player);
+                System.out.println("\nType 'quit' to end program\n");
+                System.out.println("Enter coordinates (pattern: A1)");
+                System.out.println("Next player: " + player + "\n");
+                System.out.print("Your input: ");
                 String exitCommand = FiveInARow.scanner.findInLine("quit");
 
                 if (exitCommand != null) {

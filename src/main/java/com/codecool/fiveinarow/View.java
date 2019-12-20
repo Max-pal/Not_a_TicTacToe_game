@@ -6,6 +6,16 @@ public class View {
     public final static char[] cellSymbols = {'.', 'X', 'O'};
     private final static byte cellPadding = 4;
     public final static String clearSequence = "\033[H\033[2J";
+    private final static String title = "  ____  ___  __  __  ___  _  ___   _" + "\n" +
+                                        " / ___|/ _ \\|  \\/  |/ _ \\| |/ | | | |" + "\n" +
+                                        "| |  _| | | | |\\/| | | | | ' /| | | |" + "\n" +
+                                        "| |_| | |_| | |  | | |_| | . \\| |_| |" + "\n" +
+                                        " \\____|\\___/|_|  |_|\\___/|_|\\_\\\\___/" + "\n\n";
+    private final static String watermark = " _            ___  ___    _     ___ _____   _      _   ___  ___  ___    _" + "\n" +
+                                            "| |__ _  _   / _ \\| _ \\  /_\\   | __|_   _| | |    /_\\ | _ )/ _ \\| _ \\  /_\\" + "\n" +
+                                            "| '_ \\ || | | (_) |   / / _ \\  | _|  | |   | |__ / _ \\| _ \\ (_) |   / / _ \\" + "\n" +
+                                            "|_.__/\\_, |  \\___/|_|_\\/_/ \\_\\ |___| |_|   |____/_/ \\_\\___/\\___/|_|_\\/_/ \\_\\" + "\n" +
+                                            "      |__/" + "\n\n";
     public final int nRows;
     public final int nCols;
     private final String columnHeaders;
@@ -28,7 +38,7 @@ public class View {
     }
 
     public String renderBoard(int[][] board) {
-        StringBuilder printable = new StringBuilder(this.columnHeaders);
+        StringBuilder printable = new StringBuilder(title + watermark + this.columnHeaders);
 
         for (int row = 0; row < this.nRows; row++) {
             printable.append("\n\n").append(alphabet[row]);
